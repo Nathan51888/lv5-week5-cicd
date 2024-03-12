@@ -1,22 +1,31 @@
-name: test
+name: Build and Test
+
 on:
   push:
     branches:
-    - main
-    - release/*
+      - main
   pull_request:
     branches:
-    - main
+      - main
 
 jobs:
-  my_job:
-    name: deploy to staging
-    runs-on: ubuntu-18.04 
+  build_test:
+    runs-on: ubuntu-latest
+
     steps:
-      - name: Setup Node
-        uses: actions/setup-node@v1
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: '10.x'
-      
-      - name: Install Dependencies
+          node-version: 18
+
+      - name: Install dependencies
         run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Run Tests
+        run: npm run test
