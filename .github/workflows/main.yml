@@ -1,0 +1,21 @@
+on:
+  push:
+    branches:
+    - main
+    - release/*
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  my_job:
+    name: deploy to staging
+    runs-on: ubuntu-18.04 
+    steps:
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+    
+    - name: Install Dependencies
+      run: npm install
